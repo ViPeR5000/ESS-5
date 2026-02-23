@@ -1,14 +1,21 @@
 name: Hello world
-on: TODO
+on: workflow_dispatch
 jobs:
- # the name of the job
- hello-world-job:
- # The type of runner that the job will run on
- runs-on: ubuntu-latest
- # Sequence of tasks that will be executed as part of the job
- steps:
- # Checks-out the repository
- - uses: actions/checkout@v3
- # Runs a single command using the runner shell
- - name: Run a one-line script
- run: echo Hello, world
+  hello-world-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a one-line script
+        run: "echo 'hello world'"
+  A:
+    needs: hello-world-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job A task
+        run: echo "This is job A, running after hello-world-job"
+  B:
+    needs: hello-world-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job B task
+        run: echo "This is job B, running after hello-world-job"
